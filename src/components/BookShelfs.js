@@ -32,12 +32,22 @@ class BookShelfs extends Component {
           shelfs: currentState.shelfs[i].books !== this.state.shelfs[i].books.splice(index, 1) && currentState.shelfs
         }))
       }
+      console.log(i)
     })
   }
 
   updateShelfs = (e, shelf, book) => {
     this.removeBook(shelf, book)
 
+    this.state.shelfs.map((shelf, index) => {
+      if (shelf.id === e.target.value) {
+
+        this.setState((previousState) => {
+          shelfs: previousState.shelfs[index].books.push(book.id)
+        })
+        console.log(this.state)
+      }
+    })
   }
 
   render() {
