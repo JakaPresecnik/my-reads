@@ -4,7 +4,8 @@ import LibraryBooks from './bookLibrary/LibraryBooks'
 
 class BookLibrary extends Component {
   state = {
-    books: []
+    books: [],
+    query: ''
   }
 
   componentDidMount() {
@@ -17,6 +18,8 @@ class BookLibrary extends Component {
   }
 
   render() {
+    const { books, query } = this.state
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -30,7 +33,12 @@ class BookLibrary extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author"/>
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              value={query}
+              onChange={(e)=> this.setState({query: e.target.value.split(/\s+/).join(' ')})}
+            />
 
           </div>
         </div>
