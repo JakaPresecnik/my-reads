@@ -64,7 +64,7 @@ class MyBooks extends Component {
                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageURL})` }}></div>
                 <SelectShelf updateShelfs={updateShelfs} shelf={shelf} book={book}/>
               </div>
-              <div className="book-title">{book.name}</div>
+              <div className="book-title"><h4>{book.name}</h4></div>
               <div className="book-authors">{book.author}</div>
             </div>
           </li>

@@ -32,7 +32,6 @@ class BookShelfs extends Component {
           shelfs: currentState.shelfs[i].books !== this.state.shelfs[i].books.splice(index, 1) && currentState.shelfs
         }))
       }
-      console.log(i)
     })
   }
 
@@ -45,7 +44,6 @@ class BookShelfs extends Component {
         this.setState((previousState) => {
           shelfs: previousState.shelfs[index].books.push(book.id)
         })
-        console.log(this.state)
       }
     })
   }
@@ -69,7 +67,7 @@ class BookShelfs extends Component {
           </div>
         </div>
         <div className="open-search">
-          <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+          <button onClick={(e) => this.props.showSearchPage()}>Add a book</button>
         </div>
       </div>
     )

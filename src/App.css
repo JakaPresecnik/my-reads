@@ -70,6 +70,7 @@ body, .app {
 
 .open-search button:hover {
   background-color: rgb(0, 102, 0);
+  cursor: pointer;
 }
 
 
@@ -113,6 +114,11 @@ body, .app {
   outline: none;
 }
 
+.close-search:hover {
+  background-color: #e6e6e6;
+  cursor: pointer;
+}
+
 button:active {
   border: red;
   outline: none;
@@ -120,6 +126,23 @@ button:active {
 
 .search-books-results {
   padding: 80px 10px 20px;
+}
+
+.search-book-title {
+  margin-top: 5px;
+}
+
+.search-book-title h4 {
+  margin: 0.1em 0;
+  padding: 0.3em 0;
+  border-bottom: 1px solid #666;
+}
+
+.search-book-title h6 {
+  margin: 0.1em 0;
+  padding: 0.4em 0;
+  color: #666;
+  text-align: right;
 }
 
 /* books grid */
