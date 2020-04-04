@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as BooksAPI from '../BooksAPI'
 import LibraryBooks from './bookLibrary/LibraryBooks'
+import NoBooksFound from './bookLibrary/NoBooksFound'
 
 class BookLibrary extends Component {
   state = {
@@ -17,15 +18,27 @@ class BookLibrary extends Component {
     })
   }
 
-  render() {
-    const { books, query } = this.state
+// componentDidMount used here to have the API do the search
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.query !== prevState.query && this.state.query !== '') {
+      BooksAPI.search(this.state.query)
+      .then((books) => {
+        this.setState({
+          books: books
+        })
+      })
+    }
+  }
 
+
+  render() {
+    const { books, searchBooks, query } = this.state
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <button className="close-search" onClick={(e) => this.props.showMyBooksPage()}>Close</button>
           <div className="search-books-input-wrapper">
-            {console.log(this.state)/*
+            {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
               You can find these search terms here:
               https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
@@ -43,7 +56,12 @@ class BookLibrary extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <LibraryBooks books={this.state.books}/>
+        {Array.isArray(books) ? (
+          <LibraryBooks books={books}/>
+        ) : (
+          <NoBooksFound />
+        )}
+
         </div>
       </div>
     )

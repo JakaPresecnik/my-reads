@@ -145,6 +145,21 @@ button:active {
   text-align: right;
 }
 
+.no-items {
+  text-align: center;
+  border-bottom: 3px solid #c00;
+}
+
+.no-items spam {
+  font-weight: bold;
+  font-size: 3em;
+  color: #c00;
+}
+
+.no-items p {
+  font-size: 1.5em;
+}
+
 /* books grid */
 
 .books-grid {
