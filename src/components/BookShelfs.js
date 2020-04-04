@@ -27,7 +27,6 @@ class BookShelfs extends Component {
 
     this.state.shelfs[i].books.map((bookOnShelf, index) => {
       if (bookOnShelf === book.id ) {
-
         this.setState((currentState) => ({
           shelfs: currentState.shelfs[i].books !== this.state.shelfs[i].books.splice(index, 1) && currentState.shelfs
         }))
@@ -37,10 +36,8 @@ class BookShelfs extends Component {
 
   updateShelfs = (e, shelf, book) => {
     this.removeBook(shelf, book)
-
     this.state.shelfs.map((shelf, index) => {
       if (shelf.id === e.target.value) {
-
         this.setState((previousState) => {
           shelfs: previousState.shelfs[index].books.push(book.id)
         })

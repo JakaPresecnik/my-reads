@@ -150,7 +150,7 @@ button:active {
   border-bottom: 3px solid #c00;
 }
 
-.no-items spam {
+.no-items span {
   font-weight: bold;
   font-size: 3em;
   color: #c00;

@@ -3,7 +3,7 @@ import React from 'react'
 const NoBooksFound = () => {
   return (
     <div className="no-items">
-      <p><spam>Sorry!</spam></p>
+      <p><span>Sorry!</span></p>
       <p>No books found</p>
     </div>
   )
