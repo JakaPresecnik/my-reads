@@ -50,7 +50,10 @@ class BookLibrary extends Component {
         </div>
         <div className="search-books-results">
         {Array.isArray(books) ? (
-          <LibraryBooks books={books} updateShelfs={this.props.updateShelfs}/>
+          <LibraryBooks
+            books={books}
+            updateShelfs={this.props.updateShelfs}
+          />
         ) : (
           <NoBooksFound />
         )}
