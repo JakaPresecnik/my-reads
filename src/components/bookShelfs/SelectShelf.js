@@ -1,20 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class SelectShelf extends Component {
-
-  render () {
+const SelectShelf = (props) => {
     return (
       <div className="book-shelf-changer">
-        <select>
-          <option value="move" disabled>Move to...</option>
-          <option value="reading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Read</option>
-          <option value="none">None</option>
+        <select onChange={(e) => (props.updateShelfs(e, props.shelf, props.book))}>
+          <optgroup label="Move to...">
+            <option hidden></option>
+            <option value="reading">Currently Reading</option>
+            <option value="wantToRead">Want to Read</option>
+            <option value="alreadyRead">Read</option>
+            <option value="none">None</option>
+          </optgroup>
         </select>
       </div>
     )
-  }
 }
 
 export default SelectShelf

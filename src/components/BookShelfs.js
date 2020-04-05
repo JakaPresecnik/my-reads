@@ -1,33 +1,52 @@
 import React, { Component } from 'react'
 import MyBooks from './bookShelfs/MyBooks'
+import { Link } from 'react-router-dom'
 
 class BookShelfs extends Component {
   state = {
     shelfs: [
       {
         id: 'reading',
-        text: 'Currently Reading'
+        text: 'Currently Reading',
+        books: ['toKillAMockingBird', 'endersGame']
       },
       {
         id: 'wantToRead',
-        text: 'Want to Read'
+        text: 'Want to Read',
+        books: ['1776', 'HPAndTheSorcerer']
       },
       {
-        id: 'read',
-        text: 'Read'
+        id: 'alreadyRead',
+        text: 'Read',
+        books: ['theHobbit', 'ohThePlacesYoullGo', 'theAdventuresOfTomSawyer']
       }
     ]
   }
 
-  checkShelfs = (shelf, books) => {
-    this.shelfs.forEach((shelf) => {
-      console.log('hello')
+  removeBook = (shelf, book) => {
+    const i = this.state.shelfs.indexOf(shelf)
+
+    this.state.shelfs[i].books.map((bookOnShelf, index) => {
+      if (bookOnShelf === book.id ) {
+        this.setState((currentState) => ({
+          shelfs: currentState.shelfs[i].books !== this.state.shelfs[i].books.splice(index, 1) && currentState.shelfs
+        }))
+      }
+    })
+  }
+
+  updateShelfs = (e, shelf, book) => {
+    this.removeBook(shelf, book)
+    this.state.shelfs.map((shelf, index) => {
+      if (shelf.id === e.target.value) {
+        this.setState((previousState) => {
+          shelfs: previousState.shelfs[index].books.push(book.id)
+        })
+      }
     })
   }
 
   render() {
-    const { shelfs } = this.state;
-
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -35,18 +54,18 @@ class BookShelfs extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            {shelfs.map((shelf) => (
+            {this.state.shelfs.map((shelf) => (
               <div className="bookshelf" key={shelf.id}>
                 <h2 className="bookshelf-title">{shelf.text}</h2>
                 <div className="bookshelf-books">
-                  <MyBooks shelf={shelf}/>
+                  <MyBooks updateShelfs={this.updateShelfs} shelf={shelf} />
                 </div>
               </div>
             ))}
           </div>
         </div>
         <div className="open-search">
-          <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+          <Link className="button" to="/search">Search Books</Link>
         </div>
       </div>
     )
