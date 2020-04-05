@@ -3,6 +3,7 @@ import React from 'react'
 import './App.css'
 import BookShelfs from './components/BookShelfs'
 import BookLibrary from './components/BookLibrary'
+import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -13,21 +14,14 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
-  }
-
-  onShowSearchPage = (e) => {
-    this.setState({showSearchPage: !this.state.showSearchPage})
+    
   }
 
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <BookLibrary showMyBooksPage={this.onShowSearchPage}/>
-        ) : (
-          <BookShelfs showSearchPage={this.onShowSearchPage} />
-        )}
+        <Route exact path= "/" component={BookShelfs} />
+        <Route path= "/search" component={BookLibrary} />
       </div>
     )
   }

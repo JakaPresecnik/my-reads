@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 
 class LibraryBooks extends Component {
   render() {
-
-    console.log(this.props.books)
-
     return (
       <ol className="books-grid">
       {this.props.books
@@ -15,7 +12,6 @@ class LibraryBooks extends Component {
                 {book.imageLinks != null && (
                   <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                 )}
-
               </div>
               <div className="search-book-title">
                 <h4>{book.title}</h4>
