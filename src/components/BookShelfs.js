@@ -1,75 +1,30 @@
-import React, { Component } from 'react'
+import React from 'react'
 import MyBooks from './bookShelfs/MyBooks'
 import { Link } from 'react-router-dom'
 
-class BookShelfs extends Component {
-  state = {
-    shelfs: [
-      {
-        id: 'reading',
-        text: 'Currently Reading',
-        books: ['toKillAMockingBird', 'endersGame']
-      },
-      {
-        id: 'wantToRead',
-        text: 'Want to Read',
-        books: ['1776', 'HPAndTheSorcerer']
-      },
-      {
-        id: 'alreadyRead',
-        text: 'Read',
-        books: ['theHobbit', 'ohThePlacesYoullGo', 'theAdventuresOfTomSawyer']
-      }
-    ]
-  }
-
-  removeBook = (shelf, book) => {
-    const i = this.state.shelfs.indexOf(shelf)
-
-    this.state.shelfs[i].books.map((bookOnShelf, index) => {
-      if (bookOnShelf === book.id ) {
-        this.setState((currentState) => ({
-          shelfs: currentState.shelfs[i].books !== this.state.shelfs[i].books.splice(index, 1) && currentState.shelfs
-        }))
-      }
-    })
-  }
-
-  updateShelfs = (e, shelf, book) => {
-    this.removeBook(shelf, book)
-    this.state.shelfs.map((shelf, index) => {
-      if (shelf.id === e.target.value) {
-        this.setState((previousState) => {
-          shelfs: previousState.shelfs[index].books.push(book.id)
-        })
-      }
-    })
-  }
-
-  render() {
-    return (
-      <div className="list-books">
-        <div className="list-books-title">
-          <h1>MyReads</h1>
-        </div>
-        <div className="list-books-content">
-          <div>
-            {this.state.shelfs.map((shelf) => (
-              <div className="bookshelf" key={shelf.id}>
-                <h2 className="bookshelf-title">{shelf.text}</h2>
-                <div className="bookshelf-books">
-                  <MyBooks updateShelfs={this.updateShelfs} shelf={shelf} />
-                </div>
+const BookShelfs = (props) => {
+  return (
+    <div className="list-books">
+      <div className="list-books-title">
+        <h1>MyReads</h1>
+      </div>
+      <div className="list-books-content">
+        <div>
+          {props.shelfs.map((shelf) => (
+            <div className="bookshelf" key={shelf.id}>
+              <h2 className="bookshelf-title">{shelf.text}</h2>
+              <div className="bookshelf-books">
+                <MyBooks updateShelfs={props.updateShelfs} shelf={shelf} books={props.books}/>
               </div>
-            ))}
-          </div>
-        </div>
-        <div className="open-search">
-          <Link className="button" to="/search">Search Books</Link>
+            </div>
+          ))}
         </div>
       </div>
-    )
-  }
+      <div className="open-search">
+        <Link className="button" to="/search">Search Books</Link>
+      </div>
+    </div>
+  )
 }
 
 export default BookShelfs

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import SelectShelf from '../SelectShelf'
 
 class LibraryBooks extends Component {
   render() {
@@ -12,6 +13,7 @@ class LibraryBooks extends Component {
                 {book.imageLinks != null && (
                   <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                 )}
+                <SelectShelf updateShelfs={this.props.updateShelfs} book={book}/>
               </div>
               <div className="search-book-title">
                 <h4>{book.title}</h4>

@@ -33,7 +33,7 @@ class BookLibrary extends Component {
 
 
   render() {
-    const { books, searchBooks, query } = this.state
+    const { books, query } = this.state
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -50,7 +50,7 @@ class BookLibrary extends Component {
         </div>
         <div className="search-books-results">
         {Array.isArray(books) ? (
-          <LibraryBooks books={books}/>
+          <LibraryBooks books={books} updateShelfs={this.props.updateShelfs}/>
         ) : (
           <NoBooksFound />
         )}
