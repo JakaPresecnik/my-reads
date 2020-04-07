@@ -9,7 +9,7 @@ class MyBooks extends Component {
     return (
       <ol className="books-grid">
       {books
-        .filter((book) => (book.status.includes(shelf.id)))
+        .filter((book) => (book.shelf.includes(shelf.id)))
         .map((book) => (
           <li key={book.id}>
             <div className="book">
