@@ -5,52 +5,49 @@ import BookLibrary from './components/BookLibrary'
 import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 
+
+// I split the book array to two so the performance is faster
 class BooksApp extends React.Component {
   state = {
     shelfs: [
-      {id: 'reading', text: 'Currently Reading'},
+      {id: 'currentlyReading', text: 'Currently Reading'},
       {id: 'wantToRead', text: 'Want to Read',},
       {id: 'read', text: 'Read', }
     ],
-    myBooks: [
-      {id: 'toKillAMockingBird', title: 'To Kill a Mockingbird', authors: ['Harper Lee'], shelf: 'reading', imageURL: 'http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api',},
-      {id: 'endersGame', title: 'Ender\'s Game', authors: ['Orson Scott Card'], shelf: 'reading', imageURL: 'http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api',},
-      {id: '1776', title: '1776', authors: ['David McCullough'], shelf: 'wantToRead', imageURL: 'http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api',},
-      {id: 'HPAndTheSorcerer', title: 'Harry Potter and the Sorcerer\'s Stone', authors: ['J.K. Rowling'], shelf: 'wantToRead', imageURL: 'http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72G3gA5A-Ka8XjOZGDFLAoUeMQBqZ9y-LCspZ2dzJTugcOcJ4C7FP0tDA8s1h9f480ISXuvYhA_ZpdvRArUL-mZyD4WW7CHyEqHYq9D3kGnrZCNiqxSRhry8TiFDCMWP61ujflB&source=gbs_api',},
-      {id: 'theHobbit', title: 'The Hobbit', authors: ['J.R.R. Tolkien'], shelf: 'read', imageURL: 'http://books.google.com/books/content?id=pD6arNyKyi8C&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE70Rw0CCwNZh0SsYpQTkMbvz23npqWeUoJvVbi_gXla2m2ie_ReMWPl0xoU8Quy9fk0Zhb3szmwe8cTe4k7DAbfQ45FEzr9T7Lk0XhVpEPBvwUAztOBJ6Y0QPZylo4VbB7K5iRSk&source=gbs_api',},
-      {id: 'ohThePlacesYoullGo', title: 'Oh, the Places You\'ll Go', authors: ['Seuss'], shelf: 'read', imageURL: 'http://books.google.com/books/content?id=1q_xAwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE712CA0cBYP8VKbEcIVEuFJRdX1k30rjLM29Y-dw_qU1urEZ2cQ42La3Jkw6KmzMmXIoLTr50SWTpw6VOGq1leINsnTdLc_S5a5sn9Hao2t5YT7Ax1RqtQDiPNHIyXP46Rrw3aL8&source=gbs_api',},
-      {id: 'theAdventuresOfTomSawyer', title: 'The Adventures of Tom Sawyer', authors: ['Mark Twain'], shelf:'read', imageURL: 'http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api',},
-    ],
     books: [],
+    allBooks: [],
     query: ''
   }
 
-  // componentDidMount() {
-  //   BooksAPI.getAll()
-  //   .then((books) => {
-  //     this.setState({
-  //       books
-  //     })
-  //   })
-  // }
-  
-  // componentDidUpdate used here to have the API do the search
+// used to get all books stored on the server to the DOM
+  componentDidMount() {
+    BooksAPI.getAll()
+    .then((allBooks) => {
+      this.setState({
+        books: allBooks
+      })
+    })
+  }
+
+  // componentDidUpdate used here to have the API do the search in /search tab
+  // also giving the proper shelf if we have it in any of our shelfs
   componentDidUpdate(prevProps, prevState) {
     if (this.state.query !== prevState.query) {
       BooksAPI.search(this.state.query)
-      .then((books) => {
-        Array.isArray(books) &&
-        this.state.myBooks.map((myBook) =>{
-          books.map((book) => {
+      .then((allBooks) => {
+        Array.isArray(allBooks) &&
+        this.state.books.map((myBook) =>{
+          allBooks.map((book) => {
             if(book.id === myBook.id) {
               book.shelf = myBook.shelf
             }
           })
         })
         this.setState({
-          books: books
+          allBooks: allBooks
         })
       })
+
     }
   }
 
@@ -58,33 +55,42 @@ class BooksApp extends React.Component {
     this.setState({query: e.target.value.split(/\s+/).join(' ')})
   }
 
+// here we update the server array and our DOM. It is split due to performance (much slower if only BooksAPI used)
   updateShelfs = (e, book) => {
-    const index = this.state.myBooks.indexOf(book)
+    BooksAPI.update(book, e.target.value)
+
+    const index = this.state.books.indexOf(book)
 
     if (e.target.value === 'none') {
       let copyBooks = Object.assign({}, this.state)
-      copyBooks.myBooks = copyBooks.MyBooks !== copyBooks.myBooks.splice(index, 1) && copyBooks.myBooks
+      copyBooks.books = copyBooks.books !== copyBooks.books.splice(index, 1) && copyBooks.books
 
       this.setState (copyBooks)
     }else {
       let copyBooks = Object.assign({}, this.state)
-      copyBooks.myBooks[index].shelf = e.target.value
+      copyBooks.books[index].shelf = e.target.value
 
       this.setState (copyBooks)
     }
   }
 
-  addToMyBooks = (e, book) => {
-    const index = this.state.books.indexOf(book)
+
+//this one adds the book from the search to our DOM or change the shelf if already in our array.
+//it also sends the new data to server to be stored
+  addToBooks = (e, book) => {
+    const index = this.state.allBooks.indexOf(book)
     let copyBooks = Object.assign({}, this.state)
-    copyBooks.books[index].shelf = e.target.value
-    copyBooks.books[index].imageURL = book.imageLinks.thumbnail
+    copyBooks.allBooks[index].shelf = e.target.value
 
-    this.state.myBooks.includes(book)
-    ? this.updateShelfs(e, book)
-    : copyBooks.myBooks.push(book)
-
-    this.setState(copyBooks)
+    if(!this.state.books.includes(book)){
+      copyBooks.books.push(book)
+    }else {
+      const index = this.state.books.indexOf(book)
+      let copyBooks = Object.assign({}, this.state)
+      copyBooks.books[index].shelf = e.target.value
+    }
+    this.setState({copyBooks})
+    BooksAPI.update(book, e.target.value)
   }
 
   render() {
@@ -93,15 +99,15 @@ class BooksApp extends React.Component {
         <Route exact path= "/" render={() => (
             <BookShelfs
               shelfs={this.state.shelfs}
-              books={this.state.myBooks}
+              books={this.state.books}
               updateShelfs={this.updateShelfs}
             />
           )}
         />
         <Route exact path= "/search" render={() => (
             <BookLibrary
-              updateShelfs={this.addToMyBooks}
-              books={this.state.books}
+              updateShelfs={this.addToBooks}
+              books={this.state.allBooks}
               query={this.state.query}
               updateQuery={this.updateQuery}
             />

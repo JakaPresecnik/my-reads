@@ -3,8 +3,7 @@ import React from 'react'
 const NoBooksFound = () => {
   return (
     <div className="no-items">
-      <p><span>Sorry!</span></p>
-      <p>No books found</p>
+      <p>Try something else in the search bar....</p>
     </div>
   )
 }
