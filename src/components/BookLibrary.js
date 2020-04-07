@@ -4,16 +4,6 @@ import NoBooksFound from './bookLibrary/NoBooksFound'
 import { Link } from 'react-router-dom'
 
 class BookLibrary extends Component {
-
-  // componentDidMount() {
-  //   BooksAPI.getAll()
-  //   .then((books) => {
-  //     this.setState({
-  //       books
-  //     })
-  //   })
-  // }
-
   render() {
     const { books, query, updateQuery } = this.props
     return (

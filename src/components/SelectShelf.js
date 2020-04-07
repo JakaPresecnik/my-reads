@@ -7,7 +7,7 @@ const SelectShelf = (props) => {
           <optgroup label="Move to...">
             <option value="reading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
-            <option value="alreadyRead">Read</option>
+            <option value="read">Read</option>
             <option value="none">None</option>
           </optgroup>
         </select>
