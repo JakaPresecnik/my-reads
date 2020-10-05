@@ -21,7 +21,7 @@ const BookShelfs = (props) => {
         </div>
       </div>
       <div className="open-search">
-        <Link className="button" to="/search">Search Books</Link>
+        <Link className="button" to="/my-reads/search">Search Books</Link>
       </div>
     </div>
   )
