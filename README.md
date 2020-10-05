@@ -1,4 +1,4 @@
-# MyReads Project
+# [MyReads Project](https://jakapresecnik.github.io/my-reads/)
 
 In the app we create our own library. We have 3 different shelfs, and we can switch between them. We also can search for new books and add them to our desired shelf.
 
